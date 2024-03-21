@@ -276,6 +276,44 @@ server <- function(input, output) {
   rv <- reactiveValues()
   
   rv$df <- df
+  data <- df %>% 
+    group_by(code, country) %>% 
+    summarise(value = sum(value))
+  data <- subset(data, code != "#N/A")
+  data$crop <- 'all'
+  data$disease <- 'all'
+  data <- data[, c('crop', 'disease', 'country', 'code', 'value')]
+  rv$data <- subset(data, value!=0)
+  
+  # generate choropleth
+  output$choropleth <- renderPlotly({
+    
+    # light grey boundaries
+    l <- list(color = toRGB("grey"), width = 0.5)
+    
+    # specify map projection/options
+    g <- list(
+      showframe = FALSE,
+      showcoastlines = TRUE,
+      projection = list(type = 'Mercator')
+    )
+    print('success')
+    
+    colours <- rev(c('#ed4029', '#f89d29', '#f9c216', '#66cc33'))
+    
+    fig <- plot_geo(rv$data)
+    fig <- fig %>% add_trace(
+      z = ~value, color = ~value, colors = colours,
+      text = ~country, locations = ~code, marker = list(line = l)
+    )
+    fig <- fig %>% colorbar(title = 'Records')
+    fig <- fig %>% layout(
+      geo = g
+    )
+    
+    fig
+    
+  })
   
   observeEvent(input$display, {
     
@@ -338,9 +376,11 @@ server <- function(input, output) {
       )
       print('success')
       
+      colours <- rev(c('#ed4029', '#f89d29', '#f9c216', '#66cc33'))
+      
       fig <- plot_geo(rv$data)
       fig <- fig %>% add_trace(
-        z = ~value, color = ~value, colors = 'Greens',
+        z = ~value, color = ~value, colors = colours,
         text = ~country, locations = ~code, marker = list(line = l)
       )
       fig <- fig %>% colorbar(title = 'Records')
