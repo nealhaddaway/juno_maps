@@ -5,9 +5,9 @@ account: estech
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 11225173
-bundleId: 8400216
+bundleId: 8406660
 url: https://estech.shinyapps.io/juno_maps/
 version: 1
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: .~lock.temp.csv#|www/.~lock.country_code.csv#|www/.~lock.full_dataset.csv#|www/.~lock.juno_maps_data.csv#
+ignoredFiles: .~lock.temp.csv#|www/.~lock.country_code.csv#|www/.~lock.full_dataset.csv#

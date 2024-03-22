@@ -299,7 +299,7 @@ server <- function(input, output) {
     )
     print('success')
     
-    colours <- rev(c('#ed4029', '#f89d29', '#f9c216', '#66cc33'))
+    colours <- rev(c('#3b771e', '#f0faeb'))
     
     fig <- plot_geo(rv$data)
     fig <- fig %>% add_trace(
