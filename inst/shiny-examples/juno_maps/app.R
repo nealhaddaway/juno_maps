@@ -15,7 +15,7 @@ df <- read.csv('www/juno_maps_data.csv')
 ui <- fluidPage(
 
     # Application title
-    titlePanel("Visualise Juno data"),
+    titlePanel(""),
 
     # Sidebar with a slider input for number of bins 
     sidebarLayout(
